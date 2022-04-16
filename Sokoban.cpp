@@ -1,60 +1,8 @@
 ﻿#include <iostream>
+#include "Sokoban.h"
 
-const char stageData[]{
-"########\n\
-# .. p #\n\
-# oo   #\n\
-#      #\n\
-########" };
 
-const int stageWidth{ 8 };
-const int stageHeight{ 5 };
-
-enum Object {
-    OBJ_SPACE,
-    OBJ_WALL,
-    OBJ_GOAL,
-    OBJ_BOX,
-    OBJ_BOX_ON_GOAL,
-    OBJ_MAN,
-    OBJ_MAN_ON_GOAL,
-
-    OBJ_UNKNOWN
-};
-
-void Initialize(Object* state, int width, int height, const char* stageData);
-void Draw(const Object* state, int width, int height);
-void Update(Object* state, char input, int width, int height);
-bool CheckClear(const Object* state, int width, int height);
-
-int main()
-{
-    Object* state = new Object[stageWidth * stageHeight];
-    Initialize(state, stageWidth, stageHeight, stageData);
-
-    while (true)
-    {
-        Draw(state, stageWidth, stageHeight);
-        
-        if (CheckClear(state, stageWidth, stageHeight))
-        {
-            break;
-        }
-
-        char input;
-        std::cout << "a:left  d:right  w:up  s:down" << std::endl << "command > ";
-        std::cin >> input;
-        
-
-        Update(state, input, stageWidth, stageHeight);
-    }
-
-    std::cout << "Congratulations! You Won!" << std::endl;
-
-    delete[] state;
-}
-
-void Initialize(Object* state, int width, int height, const char* stageData)
+void Sokoban::Initialize(Object* state, int width, int height, const char* stageData)
 {
     const char* data = stageData;
     int x { 0 };
@@ -113,7 +61,7 @@ void Initialize(Object* state, int width, int height, const char* stageData)
     }
 }
 
-void Draw(const Object* state, int width, int height)
+void Sokoban::Draw(const Object* state, int width, int height)
 {
     const char font[] = { ' ', '#', '.', 'o', 'O', 'p', 'P' };
     
@@ -128,7 +76,7 @@ void Draw(const Object* state, int width, int height)
 	}
 }
 
-void Update(Object* state, char input, int width, int height)
+void Sokoban::Update(Object* state, char input, int width, int height)
 {
     int dx { 0 };
     int dy { 0 };
@@ -202,7 +150,7 @@ void Update(Object* state, char input, int width, int height)
     }
 }
 
-bool CheckClear(const Object* state, int width, int height)
+bool Sokoban::CheckClear(const Object* state, int width, int height)
 {
     for (int i = 0; i < width * height; ++i)
     {
