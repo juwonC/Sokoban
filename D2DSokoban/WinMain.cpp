@@ -35,7 +35,7 @@ int WINAPI WinMain(
 	hwnd = CreateWindowEx(
 		NULL,
 		gClassName,
-		L"MyWindow",
+		L"Direct2D",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		rct.right - rct.left,
@@ -64,17 +64,22 @@ int WINAPI WinMain(
 	return static_cast<int>(msg.wParam);
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+void OnPaint(HWND hwnd)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-	
+
+	hdc = BeginPaint(hwnd, &ps);
+
+	EndPaint(hwnd, &ps);
+}
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
 	switch (message)
 	{
 		case WM_PAINT:
-			BeginPaint(hwnd, &ps);
-
-			EndPaint(hwnd, &ps);
+			OnPaint(hwnd);
 			break;
 		
 		case WM_CLOSE:
