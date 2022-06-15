@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <d2d1.h>
+#include "D2DFramework.h"
 
 #pragma comment (lib, "d2d1.lib")
 
@@ -7,8 +7,7 @@ const wchar_t gClassName[] = L"MyWindow";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-ID2D1Factory* gpD2DFactory{};
-ID2D1HwndRenderTarget* gpRenderTarget{};
+D2DFramework myFramework;
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -16,13 +15,6 @@ int WINAPI WinMain(
 	_In_ LPSTR lpCmdLine,
 	_In_ int nShowCmd )
 {
-	HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &gpD2DFactory);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL, L"Failed to create D2D Factory", L"Error", MB_ICONEXCLAMATION | MB_OK);
-		return 0;
-	}
-
 	HWND hwnd;
 	WNDCLASSEX wc;
 
@@ -64,67 +56,39 @@ int WINAPI WinMain(
 		return 0;
 	}
 
-	GetClientRect(hwnd, &rct);
-	hr = gpD2DFactory->CreateHwndRenderTarget(
-		D2D1::RenderTargetProperties(),
-		D2D1::HwndRenderTargetProperties(
-			hwnd,
-			D2D1::SizeU(rct.right - rct.left, rct.bottom - rct.top)
-		),
-		&gpRenderTarget
-	);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL, L"Failed to create D2D RenderTarget", L"Error", MB_ICONEXCLAMATION | MB_OK);
-		return 0;
-	}
+	myFramework.Init(hwnd);
 
 	ShowWindow(hwnd, nShowCmd);
 	UpdateWindow(hwnd);
 
 	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0))
+	while (true)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+		}
+		else
+		{
+			myFramework.Render();
+		}
 	}
 
-	if (gpRenderTarget != nullptr)
-	{
-		gpRenderTarget->Release();
-		gpRenderTarget = nullptr;
-	}
-	if (gpD2DFactory != nullptr)
-	{
-		gpD2DFactory->Release();
-		gpD2DFactory = nullptr;
-	}
+	myFramework.Release();
 
 	return static_cast<int>(msg.wParam);
-}
-
-void OnPaint(HWND hwnd)
-{
-	HDC hdc;
-	PAINTSTRUCT ps;
-
-	hdc = BeginPaint(hwnd, &ps);
-
-	gpRenderTarget->BeginDraw();
-	gpRenderTarget->Clear(D2D1::ColorF(0.0f, 0.2f, 0.4f, 1.0f));
-	gpRenderTarget->EndDraw();
-
-	EndPaint(hwnd, &ps);
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
-	{
-		case WM_PAINT:
-			OnPaint(hwnd);
-			break;
-		
+	{		
 		case WM_CLOSE:
 			DestroyWindow(hwnd);
 			break;
