@@ -9,11 +9,7 @@ HRESULT D2DFramework::Init(HWND hwnd)
 		D2D1_FACTORY_TYPE_SINGLE_THREADED,
 		mspD2DFactory.GetAddressOf()
 	);
-	if (FAILED(hr))
-	{
-		ShowErrorMsg(L"Failed to create D2D Factory");
-		return hr;
-	}
+	ThrowIfFailed(hr);
 	
 	RECT wr;
 	GetClientRect(hwnd, &wr);
@@ -25,11 +21,7 @@ HRESULT D2DFramework::Init(HWND hwnd)
 		),
 		mspRenderTarget.GetAddressOf()
 	);
-	if (FAILED(hr))
-	{
-		ShowErrorMsg(L"Failed to create D2D RenderTarget");
-		return hr;
-	}
+	ThrowIfFailed(hr);
 
 	return S_OK;
 }

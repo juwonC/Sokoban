@@ -56,7 +56,18 @@ int WINAPI WinMain(
 		return 0;
 	}
 
-	myFramework.Init(hwnd);
+	try
+	{
+		myFramework.Init(hwnd);
+	}
+	catch (const com_exception& e)
+	{
+		static wchar_t wstr[64] = {};
+		size_t len;
+
+		mbstowcs_s(&len, wstr, e.what(), 64);
+		MessageBox(nullptr, wstr, L"DirectX Exception", MB_ICONEXCLAMATION | MB_OK);
+	}
 
 	ShowWindow(hwnd, nShowCmd);
 	UpdateWindow(hwnd);

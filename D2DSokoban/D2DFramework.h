@@ -2,6 +2,37 @@
 
 #include <d2d1.h>
 #include <wrl/client.h>
+#include <exception>
+#include <stdio.h>
+
+class com_exception : public std::exception
+{
+public:
+	com_exception(HRESULT hr) : mResult{ hr }
+	{
+	}
+
+	virtual const char* what() const override
+	{
+		static char str[64] = {};
+		sprintf_s(
+			str, "Failure with HRESULT of %08X",
+			static_cast<unsigned int>(mResult)
+		);
+		return str;
+	}
+
+private:
+	HRESULT mResult;
+};
+
+inline void ThrowIfFailed(HRESULT hr)
+{
+	if (FAILED(hr))
+	{
+		throw com_exception(hr);
+	}
+}
 
 class D2DFramework
 {
