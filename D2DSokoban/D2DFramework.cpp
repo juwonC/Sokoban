@@ -94,7 +94,8 @@ HRESULT D2DFramework::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT width,
 {
 	HRESULT hr;
 
-	CoInitialize(nullptr);
+	hr = CoInitialize(nullptr);
+	ThrowIfFailed(hr);
 
 	hr = InitWindow(hInstance, title, width, height);
 	ThrowIfFailed(hr);
