@@ -20,7 +20,6 @@ public:
 	virtual ~Actor();
 
 private:
-	HRESULT LoadWICImage(LPCWSTR filename);
 	void Draw(float x, float y, float opacity = 1.0f);
 
 public:
