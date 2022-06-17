@@ -55,16 +55,8 @@ HRESULT D2DFramework::InitWindow(HINSTANCE hInstance, LPCWSTR title, UINT width,
 }
 
 HRESULT D2DFramework::InitD2D()
-{
-	HRESULT hr = ::CoCreateInstance(
-		CLSID_WICImagingFactory,
-		nullptr,
-		CLSCTX_INPROC_SERVER,
-		IID_PPV_ARGS(mspWICFactory.GetAddressOf())
-	);
-	ThrowIfFailed(hr);
-	
-	hr = D2D1CreateFactory(
+{	
+	HRESULT hr = D2D1CreateFactory(
 		D2D1_FACTORY_TYPE_SINGLE_THREADED,
 		mspD2DFactory.GetAddressOf()
 	);
