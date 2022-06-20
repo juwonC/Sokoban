@@ -5,6 +5,7 @@
 #include <wincodec.h>
 #include <map>
 #include <string>
+#include "ComException.h"
 
 class BitmapManager final
 {

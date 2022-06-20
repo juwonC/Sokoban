@@ -1,8 +1,8 @@
 #include "D2DFramework.h"
+#include "BitmapManager.h"
 #include <sstream>
 
 #pragma comment (lib, "d2d1.lib")
-#pragma comment (lib, "WindowsCodecs.lib")
 
 HRESULT D2DFramework::InitWindow(HINSTANCE hInstance, LPCWSTR title, UINT width, UINT height)
 {
@@ -95,13 +95,17 @@ HRESULT D2DFramework::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT width,
 	hr = InitD2D();
 	ThrowIfFailed(hr);
 	
+	hr = BitmapManager::Instance().Initialize(mspRenderTarget.Get());
+	ThrowIfFailed(hr, "Failed to create BitmapManager");
+
 	return hr;
 }
 
 void D2DFramework::Release()
 {
+	BitmapManager::Instance().Release();
+	
 	mspRenderTarget.ReleaseAndGetAddressOf();
-	mspWICFactory.ReleaseAndGetAddressOf();
 
 	CoUninitialize();
 }

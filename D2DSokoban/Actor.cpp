@@ -1,10 +1,11 @@
 #include "Actor.h"
+#include "BitmapManager.h"
 
 Actor::Actor(D2DFramework* pFramework, LPCWSTR filename) :
 	mpFramework{ pFramework },
 	mX{}, mY{}, mOpacity{ 1.0f }
 {
-	//LoadWICImage(filename);
+	mpBitmap = BitmapManager::Instance().LoadBitmap(filename);
 }
 
 Actor::Actor(D2DFramework* pFramework, LPCWSTR filename, 
@@ -17,12 +18,12 @@ Actor::Actor(D2DFramework* pFramework, LPCWSTR filename,
 
 Actor::~Actor()
 {
-	mspBitmap.ReleaseAndGetAddressOf();
+	
 }
 
 void Actor::Draw(float x, float y, float opacity)
 {
-	auto size{ mspBitmap->GetPixelSize() };
+	auto size{ mpBitmap->GetPixelSize() };
 	D2D1_RECT_F rect{
 		x, y,
 		static_cast<float>(x + size.width),
@@ -30,7 +31,7 @@ void Actor::Draw(float x, float y, float opacity)
 	};
 
 	mpFramework->GetRenderTarget()->DrawBitmap(
-		mspBitmap.Get(),
+		mpBitmap,
 		rect,
 		opacity
 	);
