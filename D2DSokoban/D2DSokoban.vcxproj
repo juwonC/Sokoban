@@ -132,6 +132,7 @@
     <ClCompile Include="BitmapManager.cpp" />
     <ClCompile Include="ComException.cpp" />
     <ClCompile Include="D2DFramework.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +141,7 @@
     <ClInclude Include="BitmapManager.h" />
     <ClInclude Include="ComException.h" />
     <ClInclude Include="D2DFramework.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
