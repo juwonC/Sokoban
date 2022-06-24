@@ -1,5 +1,5 @@
 #include <windows.h>
-#include "ActorSample.h"
+#include "Game.h"
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -11,7 +11,7 @@ int WINAPI WinMain(
 	
 	try
 	{
-		ActorSample myFramework;
+		Game myFramework;
 		
 		if (SUCCEEDED(myFramework.Initialize(hInstance)))
 		{

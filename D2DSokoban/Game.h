@@ -1,17 +1,17 @@
 #pragma once
-
 #include <memory>
-#include <vector>
+#include "D2DFramework.h"
+#include "ComException.h"
 #include "Actor.h"
+#include "Player.h"
 
-class ActorSample : public D2DFramework
+class Game : public D2DFramework
 {
-	std::unique_ptr<Actor> mspPlayer;
-	std::vector<std::unique_ptr<Actor>> mspWall;
+	std::unique_ptr<Player> mspPlayer;
 
 public:
 	virtual HRESULT Initialize(HINSTANCE hInstance, LPCWSTR title = L"Sokoban",
-		UINT width = 1024, UINT height = 768) override;
+		UINT width = 1024, UINT height = 800) override;
 
 	virtual void Release() override;
 	virtual void Render() override;
