@@ -33,3 +33,37 @@ void Game::Render()
         CreateDeviceResources();
     }
 }
+
+int Game::GameLoop()
+{
+	ShowWindow(mHwnd, SW_SHOW);
+	UpdateWindow(mHwnd);
+
+	MSG msg{};
+
+	while (true)
+	{
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+			if (msg.message == WM_KEYDOWN)
+			{
+				mspPlayer->Move(msg.wParam);
+			}
+		}
+		else
+		{
+			Render();
+		}
+	}
+
+	Release();
+
+	return static_cast<int>(msg.wParam);
+}

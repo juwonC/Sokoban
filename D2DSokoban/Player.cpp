@@ -57,6 +57,31 @@ void Player::Draw()
 	pRT->DrawBitmap(mpTemp, rect, mOpacity);
 }
 
-void Player::Move()
+void Player::Move(WPARAM key)
 {
+	switch (key)
+	{
+		case VK_UP:
+			mDirection = Direction::Back;
+			mY -= BOX_SIZE;
+			break;
+
+		case VK_RIGHT:
+			mDirection = Direction::Right;
+			mX += BOX_SIZE;
+			break;
+
+		case VK_DOWN:
+			mDirection = Direction::Front;
+			mY += BOX_SIZE;
+			break;
+
+		case VK_LEFT:
+			mDirection = Direction::Left;
+			mX -= BOX_SIZE;
+			break;
+
+		default:
+			break;
+	}
 }

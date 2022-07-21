@@ -29,6 +29,6 @@ public:
 	Player(D2DFramework* pFramework);
 
 	virtual void Draw() override;
-	void Move();
+	void Move(WPARAM key);
 };
 
