@@ -6,8 +6,7 @@ HRESULT Game::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT width, UINT he
     hr = D2DFramework::Initialize(hInstance, title, width, height);
     ThrowIfFailed(hr);
 
-	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
-    mspPlayer = std::make_unique<Player>(this);
+	CreateSokoban();
     
     return S_OK;
 }
@@ -27,6 +26,12 @@ void Game::Render()
     mspRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	mspBackGround->Draw();
+
+	for (auto& e : mspWall)
+	{
+		e->Draw();
+	}
+
     mspPlayer->Draw();
 
     hr = mspRenderTarget->EndDraw();
@@ -68,4 +73,29 @@ int Game::GameLoop()
 	Release();
 
 	return static_cast<int>(msg.wParam);
+}
+
+void Game::CreateSokoban()
+{
+	float posX{ BEGIN_X }, posY{ BEGIN_Y };
+
+	for (int x = 0; x < GAME_COLUMN; ++x)
+	{
+		posY = BEGIN_Y;
+
+		for (int y = 0; y < GAME_ROW; ++y)
+		{
+			if (posX == BEGIN_X || posY == BEGIN_Y ||
+				x == GAME_COLUMN - 1 || y == GAME_ROW - 1)
+			{
+				mspWall.push_back(std::make_shared<Actor>(this, L"Data/game_wall.png", posX, posY));
+			}
+
+			posY += BOX_SIZE;
+		}
+		posX += BOX_SIZE;
+	}
+	
+	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
+	mspPlayer = std::make_unique<Player>(this);
 }

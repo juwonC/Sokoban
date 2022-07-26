@@ -12,8 +12,8 @@ enum class Direction
 class Player : public Actor
 {
 protected:
-	const float X{ 10.0f };
-	const float Y{ 10.0f };
+	const float X{ 100.0f };
+	const float Y{ 100.0f };
 	const float BOX_SIZE{ 64.0f };
 
 	D2D1_RECT_F mPlayerPosition;
