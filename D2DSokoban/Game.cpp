@@ -6,6 +6,7 @@ HRESULT Game::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT width, UINT he
     hr = D2DFramework::Initialize(hInstance, title, width, height);
     ThrowIfFailed(hr);
 
+	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
     mspPlayer = std::make_unique<Player>(this);
     
     return S_OK;
@@ -25,6 +26,7 @@ void Game::Render()
 
     mspRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
+	mspBackGround->Draw();
     mspPlayer->Draw();
 
     hr = mspRenderTarget->EndDraw();

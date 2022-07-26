@@ -7,6 +7,7 @@
 
 class Game : public D2DFramework
 {
+	std::unique_ptr<Actor> mspBackGround;
 	std::unique_ptr<Player> mspPlayer;
 
 public:
