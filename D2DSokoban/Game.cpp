@@ -13,7 +13,21 @@ HRESULT Game::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT width, UINT he
 
 void Game::Release()
 {
-    D2DFramework::Release();
+	mspPlayer.reset();
+
+	for (auto& e : mspGround)
+	{
+		e.reset();
+	}
+	mspGround.clear();
+
+	for (auto& e : mspWall)
+	{
+		e.reset();
+	}
+	mspWall.clear();
+	
+	D2DFramework::Release();
 }
 
 void Game::Render()
@@ -28,6 +42,10 @@ void Game::Render()
 	mspBackGround->Draw();
 
 	for (auto& e : mspWall)
+	{
+		e->Draw();
+	}
+	for (auto& e : mspGround)
 	{
 		e->Draw();
 	}
@@ -89,6 +107,10 @@ void Game::CreateSokoban()
 				x == GAME_COLUMN - 1 || y == GAME_ROW - 1)
 			{
 				mspWall.push_back(std::make_shared<Actor>(this, L"Data/game_wall.png", posX, posY));
+			}
+			else
+			{
+				mspGround.push_back(std::make_shared<Actor>(this, L"Data/game_ground.png", posX, posY));
 			}
 
 			posY += BOX_SIZE;

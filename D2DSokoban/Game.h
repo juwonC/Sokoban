@@ -18,6 +18,7 @@ protected:
 	std::unique_ptr<Actor> mspBackGround;
 	std::unique_ptr<Player> mspPlayer;
 	std::list<std::shared_ptr<Actor>> mspWall;
+	std::list<std::shared_ptr<Actor>> mspGround;
 
 public:
 	virtual HRESULT Initialize(HINSTANCE hInstance, LPCWSTR title = L"Sokoban",
