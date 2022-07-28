@@ -5,15 +5,15 @@
 
 Player::Player(D2DFramework* pFramework) : Actor(pFramework, L"Data/player_front.png")
 {
-	mX = X;
-	mY = Y;
+	mX = PLAYER_X;
+	mY = PLAYER_Y;
 	
 	mDirection = Direction::Front;
 	
-	mPlayerPosition.bottom = mY + BOX_SIZE;
-	mPlayerPosition.left = mX;
-	mPlayerPosition.right = mX + BOX_SIZE;
-	mPlayerPosition.top = mY;
+	//mPlayerPosition.bottom = mY + BOX_SIZE;
+	//mPlayerPosition.left = mX;
+	//mPlayerPosition.right = mX + BOX_SIZE;
+	//mPlayerPosition.top = mY;
 
 	mpBack = BitmapManager::Instance().LoadBitmap(L"Data/player_back.png");
 	mpLeft = BitmapManager::Instance().LoadBitmap(L"Data/player_left.png");

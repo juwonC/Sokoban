@@ -15,6 +15,12 @@ void Game::Release()
 {
 	mspPlayer.reset();
 
+	for (auto& e : mspBox)
+	{
+		e.reset();
+	}
+	mspBox.clear();
+
 	for (auto& e : mspGround)
 	{
 		e.reset();
@@ -41,15 +47,19 @@ void Game::Render()
 
 	mspBackGround->Draw();
 
-	for (auto& e : mspWall)
+	for (const auto& e : mspWall)
 	{
 		e->Draw();
 	}
-	for (auto& e : mspGround)
+	for (const auto& e : mspGround)
 	{
 		e->Draw();
 	}
-
+	for (const auto& e : mspBox)
+	{
+		e->Draw();
+	}
+	
     mspPlayer->Draw();
 
     hr = mspRenderTarget->EndDraw();
@@ -118,6 +128,11 @@ void Game::CreateSokoban()
 		posX += BOX_SIZE;
 	}
 	
+	for (int i = 0; i < 3; ++i)
+	{
+		mspBox.push_back(std::make_shared<Box>(this));
+	}
+
 	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
 	mspPlayer = std::make_unique<Player>(this);
 }

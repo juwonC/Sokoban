@@ -5,6 +5,7 @@
 #include "ComException.h"
 #include "Actor.h"
 #include "Player.h"
+#include "Box.h"
 
 class Game : public D2DFramework
 {
@@ -17,6 +18,7 @@ protected:
 	
 	std::unique_ptr<Actor> mspBackGround;
 	std::unique_ptr<Player> mspPlayer;
+	std::list<std::shared_ptr<Box>> mspBox;
 	std::list<std::shared_ptr<Actor>> mspWall;
 	std::list<std::shared_ptr<Actor>> mspGround;
 
