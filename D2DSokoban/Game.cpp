@@ -89,7 +89,10 @@ int Game::GameLoop()
 			}
 			if (msg.message == WM_KEYDOWN)
 			{
-				mspPlayer->Move(msg.wParam);
+				if (CheckBox(msg.wParam))
+				{
+					mspPlayer->Move(msg.wParam);
+				}
 			}
 		}
 		else
@@ -135,4 +138,61 @@ void Game::CreateSokoban()
 
 	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
 	mspPlayer = std::make_unique<Player>(this);
+}
+
+bool Game::CheckBox(WPARAM key)
+{
+	bool output;
+	
+	for (auto& e : mspBox)
+	{
+		D2D1_RECT_F boxRect{ e->GetRect() };
+		D2D1_RECT_F playerRect{ mspPlayer->GetRect() };
+
+		switch (key)
+		{
+			case VK_DOWN:
+
+				if ((boxRect.top - BOX_SIZE == playerRect.bottom && boxRect.left == playerRect.left) && key == VK_DOWN)
+				{
+					e->Move(mspBox, key);
+					output = false;
+				}
+					break;
+
+			case VK_RIGHT:
+
+				if ((boxRect.left - BOX_SIZE == playerRect.right && boxRect.top == playerRect.top) && key == VK_RIGHT)
+				{
+					e->Move(mspBox, key);
+					output = false;
+				}
+				break;
+
+			case VK_UP:
+
+				if ((boxRect.bottom == playerRect.top && boxRect.left == playerRect.left) && key == VK_UP)
+				{
+					e->Move(mspBox, key);
+					output = false;
+				}
+				break;
+
+			case VK_LEFT:
+
+				if ((boxRect.right == playerRect.left && boxRect.top == playerRect.top) && key == VK_LEFT)
+				{
+					e->Move(mspBox, key);
+					output = false;
+				}
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	output = true;
+
+	return output;
 }

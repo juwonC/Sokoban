@@ -32,5 +32,6 @@ public:
 
 private:
 	void CreateSokoban();
+	virtual bool CheckBox(WPARAM key);
 };
 

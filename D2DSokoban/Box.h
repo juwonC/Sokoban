@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+#include <list>
 #include "Actor.h"
 
 class Box : public Actor
@@ -12,9 +14,15 @@ protected:
 	const float BOX_Y{ 164.0f };
 	const float BOX_SIZE{ 64.0f };
 
+	D2D1_RECT_F mBoxPosition;
+
 public:
 	Box(D2DFramework* pFramework);
 
 	virtual void Draw() override;
+	void Move(std::list<std::shared_ptr<Box>>& boxList, WPARAM key);
+	bool CheckMove(std::list<std::shared_ptr<Box>>& boxList, WPARAM key);
+
+	inline D2D1_RECT_F GetRect() { return mBoxPosition; }
 };
 

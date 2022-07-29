@@ -10,10 +10,10 @@ Player::Player(D2DFramework* pFramework) : Actor(pFramework, L"Data/player_front
 	
 	mDirection = Direction::Front;
 	
-	//mPlayerPosition.bottom = mY + BOX_SIZE;
-	//mPlayerPosition.left = mX;
-	//mPlayerPosition.right = mX + BOX_SIZE;
-	//mPlayerPosition.top = mY;
+	mPlayerPosition.bottom = mY + BOX_SIZE;
+	mPlayerPosition.left = mX;
+	mPlayerPosition.right = mX + BOX_SIZE;
+	mPlayerPosition.top = mY;
 
 	mpBack = BitmapManager::Instance().LoadBitmap(L"Data/player_back.png");
 	mpLeft = BitmapManager::Instance().LoadBitmap(L"Data/player_left.png");
@@ -63,45 +63,59 @@ void Player::Move(WPARAM key)
 	{
 		case VK_UP:
 			
-			mDirection = Direction::Back;
-
-			if (mY != TOP)
-			{
-				mY -= BOX_SIZE;
-			}
+			
+				mDirection = Direction::Back;
+			
+				if (mY != TOP)
+				{
+					mY -= BOX_SIZE;
+				}
+			
 			break;
 
 		case VK_RIGHT:
 			
-			mDirection = Direction::Right;
-
-			if (mX != RIGHT)
-			{
-				mX += BOX_SIZE;
-			}
+			
+				mDirection = Direction::Right;
+			
+				if (mX != RIGHT)
+				{
+					mX += BOX_SIZE;
+				}
+			
 			break;
 
 		case VK_DOWN:
-			
-			mDirection = Direction::Front;
 
-			if (mY != BOTTOM)
-			{
-				mY += BOX_SIZE;
-			}
+			
+				mDirection = Direction::Front;
+			
+				if (mY != BOTTOM)
+				{
+					mY += BOX_SIZE;
+				}
+			
 			break;
 
 		case VK_LEFT:
 			
-			mDirection = Direction::Left;
-
-			if (mX != LEFT)
-			{
-				mX -= BOX_SIZE;
-			}
+			
+				mDirection = Direction::Left;
+			
+			
+				if (mX != LEFT)
+				{
+					mX -= BOX_SIZE;
+				}
+			
 			break;
 
 		default:
 			break;
 	}
+
+	mPlayerPosition.bottom = mY;
+	mPlayerPosition.left = mX;
+	mPlayerPosition.right = mX;
+	mPlayerPosition.top = mY;
 }

@@ -20,7 +20,7 @@ protected:
 	const float PLAYER_Y{ 164.0f };
 	const float BOX_SIZE{ 64.0f };
 
-	//D2D1_RECT_F mPlayerPosition;
+	D2D1_RECT_F mPlayerPosition;
 
 	ID2D1Bitmap* mpBack;
 	ID2D1Bitmap* mpRight;
@@ -33,6 +33,9 @@ public:
 	Player(D2DFramework* pFramework);
 
 	virtual void Draw() override;
-	void Move(WPARAM key);
+	virtual void Move(WPARAM key);
+
+	inline D2D1_RECT_F GetRect() { return mPlayerPosition; }
+	inline Direction GetDirection() { return mDirection; }
 };
 
