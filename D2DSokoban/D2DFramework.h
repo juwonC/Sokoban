@@ -37,6 +37,8 @@ public:
 		return mspRenderTarget.Get();
 	}
 
+	HWND GetWindowHandle() { return mHwnd; }
+
 public:
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 };

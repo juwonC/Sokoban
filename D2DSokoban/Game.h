@@ -36,5 +36,6 @@ public:
 private:
 	void CreateSokoban();
 	bool CheckBox(WPARAM key);
+	void CheckGoal(std::list<std::shared_ptr<Box>>& boxList, std::list<std::shared_ptr<Goal>>& goalList);
 };
 

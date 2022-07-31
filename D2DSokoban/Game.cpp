@@ -102,6 +102,7 @@ int Game::GameLoop()
 		else
 		{
 			Render();
+			CheckGoal(mspBox, mspGoal);
 		}
 	}
 
@@ -200,4 +201,28 @@ bool Game::CheckBox(WPARAM key)
 	output = true;
 
 	return output;
+}
+
+void Game::CheckGoal(std::list<std::shared_ptr<Box>>& boxList, std::list<std::shared_ptr<Goal>>& goalList)
+{
+	for (auto& goal : goalList)
+	{
+		for (auto& box : boxList)
+		{
+			if ((goal->GetRect().top == box->GetRect().top && 
+				goal->GetRect().left == box->GetRect().left) &&
+				!(goal->GetCheck()))
+			{
+				goal->CheckTrue();
+				boxList.remove(box);
+				return;
+			}
+		}
+	}
+
+	if (boxList.empty())
+	{
+		MessageBox(nullptr, L"Clear!", L"Congratulations!", MB_OK);
+		DestroyWindow(this->GetWindowHandle());
+	}
 }

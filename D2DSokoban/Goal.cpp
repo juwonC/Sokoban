@@ -1,5 +1,6 @@
 #include <random>
 #include "Goal.h"
+#include "BitmapManager.h"
 
 Goal::Goal(D2DFramework* pFramework) : Actor(pFramework, L"Data/goal.png")
 {
@@ -11,6 +12,15 @@ Goal::Goal(D2DFramework* pFramework) : Actor(pFramework, L"Data/goal.png")
 
 	mX = GOAL_X + x(gen) * GOAL_SIZE;
 	mY = GOAL_Y + y(gen) * GOAL_SIZE;
+
+	mGoalPosition.bottom = mY + GOAL_SIZE;
+	mGoalPosition.left = mX;
+	mGoalPosition.right = mX + GOAL_SIZE;
+	mGoalPosition.top = mY;
+
+	mCheck = false;
+
+	mpBoxOnGoal = BitmapManager::Instance().LoadBitmap(L"Data/boxOnGoal.png");
 }
 
 void Goal::Draw()
@@ -27,5 +37,13 @@ void Goal::Draw()
 	auto matTranslate = D2D1::Matrix3x2F::Translation(mX, mY);
 
 	pRT->SetTransform(matTranslate);
-	pRT->DrawBitmap(mpBitmap, rect, mOpacity);
+
+	if (mCheck)
+	{
+		pRT->DrawBitmap(mpBoxOnGoal, rect, mOpacity);
+	}
+	else
+	{
+		pRT->DrawBitmap(mpBitmap, rect, mOpacity);
+	}
 }
