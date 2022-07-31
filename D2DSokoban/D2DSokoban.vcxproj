@@ -133,6 +133,7 @@
     <ClCompile Include="ComException.cpp" />
     <ClCompile Include="D2DFramework.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="ComException.h" />
     <ClInclude Include="D2DFramework.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

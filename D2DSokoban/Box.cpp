@@ -1,5 +1,5 @@
-#include "Box.h"
 #include <random>
+#include "Box.h"
 
 Box::Box(D2DFramework* pFramework) : Actor(pFramework, L"Data/box.png")
 {

@@ -59,6 +59,10 @@ void Game::Render()
 	{
 		e->Draw();
 	}
+	for (const auto& e : mspGoal)
+	{
+		e->Draw();
+	}
 	
     mspPlayer->Draw();
 
@@ -134,6 +138,7 @@ void Game::CreateSokoban()
 	for (int i = 0; i < 3; ++i)
 	{
 		mspBox.push_back(std::make_shared<Box>(this));
+		mspGoal.push_back(std::make_shared<Goal>(this));
 	}
 
 	mspBackGround = std::make_unique<Actor>(this, L"Data/bg_blank.png", 0.0f, 0.0f);
