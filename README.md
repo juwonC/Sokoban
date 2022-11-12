@@ -3,6 +3,8 @@
 <br>
 
 
+<img src="https://user-images.githubusercontent.com/92084292/201483358-40762b9d-a589-4d80-9fd7-860200db54f7.gif">
+
 Player
 ```
 이동
